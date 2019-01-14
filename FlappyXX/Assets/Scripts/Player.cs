@@ -17,7 +17,7 @@ public class Player : MonoBehaviour {
         ChangeGameState(GameManager.Instance.gameState.Value);
         GameManager.Instance.gameState.action += ChangeGameState;
 
-        GameManager.State = GameManager.Play;
+        //GameManager.State = GameManager.Play;
         GameManager.StateChangeAction.AddListener(ChangeGameState);
 	}
 	
@@ -83,9 +83,11 @@ public class Player : MonoBehaviour {
 
             case GameManager.Play:
                 Debug.Log("Call ChangeGameState (State -> Play)");
+                rigid.useGravity = true;
                 break;
 
             case GameManager.Title:
+                rigid.useGravity = false;
                 break;
         }
     }

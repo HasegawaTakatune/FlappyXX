@@ -32,7 +32,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     {
 
     }
-    private static int state;
+    private static int state = Title;
     public static int State
     {
         get

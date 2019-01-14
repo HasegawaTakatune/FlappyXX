@@ -6,6 +6,8 @@ public class Spawner : MonoBehaviour {
 
     [SerializeField]
     private GameObject Boad;
+    private bool doOnce = false;
+    private bool end = false;
 
     private IEnumerator Spawn()
     {
@@ -19,11 +21,36 @@ public class Spawner : MonoBehaviour {
 
             // n秒間待ち状態になる
             yield return new WaitForSeconds(2.0f);
+
+            if (end) break;
+        }
+    }
+
+    void SpawnerControl(int state)
+    {
+        switch (state)
+        {
+            case GameManager.Play:
+                if (!doOnce)
+                {
+                    StartCoroutine("Spawn");
+                    doOnce = true;
+                }
+                break;
+
+            case GameManager.GameOver:
+                end = true;
+                break;
+
+            case GameManager.Title:
+                doOnce = false;
+                break;
         }
     }
 
 	void Start () {
-        StartCoroutine("Spawn");
+        //StartCoroutine("Spawn");
+        GameManager.StateChangeAction.AddListener(SpawnerControl);
 	}
 	
 	void Update () {

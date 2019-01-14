@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MenuUI : MonoBehaviour {
 
@@ -10,32 +11,46 @@ public class MenuUI : MonoBehaviour {
 
 	void Start () {
         //GameManager.Instance.gameState.action += MenuControl;
-        
+        GameManager.StateChangeAction.AddListener(MenuControl);
 	}
 
-    void OnDestroy()
+    void Update()
     {
-        if (GameManager.Instance != null)
+        if (GameManager.State == GameManager.Title & Input.GetKeyDown(KeyCode.Return))
         {
-            //GameManager.Instance.gameState.action -= MenuControl;
+            GameManager.State = GameManager.Play;
         }
     }
 
-    void MenuControl(GameManager.GameState state)
+    void OnDestroy()
+    {
+        
+    }
+
+    void MenuControl(int state)
     {
         switch (state)
         {
-            case GameManager.GameState.GameOver:
+            case GameManager.Play:
                 Title.enabled = false;
                 break;
 
-            case GameManager.GameState.Play:
-                Title.enabled = false;
+            case GameManager.GameOver:
+                Title.enabled = true;
+                StartCoroutine("ReturnScene");
                 break;
 
-            case GameManager.GameState.Title:
+            case GameManager.Title:
+                Title.enabled = true;
                 break;
         }
         Debug.Log("MenuUI change state");
+    }
+
+    private IEnumerator ReturnScene()
+    {
+        yield return new WaitForSeconds(5.0f);
+        GameManager.State = GameManager.Title;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
