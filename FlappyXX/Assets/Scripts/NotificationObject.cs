@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections;
-using UnityEngine;
-using UnityEngine.Events;
-using System.Collections.Generic;
+﻿using UnityEngine.Events;
 
+/**
+ * 変数が更新された際にコールバックを発生させるクラス
+ **/ 
 [System.Serializable]
 public class NotificationObject<T>{
 

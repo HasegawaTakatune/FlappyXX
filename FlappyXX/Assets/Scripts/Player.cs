@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Player : MonoBehaviour {
 
@@ -66,7 +64,6 @@ public class Player : MonoBehaviour {
             case GameManager.GameState.GameOver:
                 // ゲームオーバー時にUpdateを停止する
                 enabled = false;
-                Debug.Log("Player change state");
                 break;
         }
     }
@@ -78,11 +75,9 @@ public class Player : MonoBehaviour {
             case GameManager.GameOver:
                 // ゲームオーバー時にUpdateを停止する
                 enabled = false;
-                Debug.Log("Player change state<int>");
                 break;
 
             case GameManager.Play:
-                Debug.Log("Call ChangeGameState (State -> Play)");
                 rigid.useGravity = true;
                 break;
 

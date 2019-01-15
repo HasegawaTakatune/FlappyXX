@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawner : MonoBehaviour {
@@ -15,27 +14,24 @@ public class Spawner : MonoBehaviour {
         {
             // Instantiateでオブジェクトの生成
             // 引数(１．オブジェクト　２．座標　３．向き)
-            GameObject obj = GameObject.Instantiate(Boad,
-                new Vector3(10, Random.Range(6f, 0f), 10),
-                Quaternion.identity);
+            GameObject obj = GameObject.Instantiate(Boad, new Vector3(10, Random.Range(6f, 0f), 10), Quaternion.identity);
 
             // n秒間待ち状態になる
             yield return new WaitForSeconds(2.0f);
 
+            // ゲームオーバー時生成を止める
             if (end) break;
         }
     }
 
     void SpawnerControl(int state)
     {
+        // ゲームステートごとの処理
         switch (state)
         {
             case GameManager.Play:
                 if (!doOnce)
-                {
-                    StartCoroutine("Spawn");
                     doOnce = true;
-                }
                 break;
 
             case GameManager.GameOver:
@@ -49,11 +45,7 @@ public class Spawner : MonoBehaviour {
     }
 
 	void Start () {
-        //StartCoroutine("Spawn");
+        // イベントの登録
         GameManager.StateChangeAction.AddListener(SpawnerControl);
-	}
-	
-	void Update () {
-		
 	}
 }

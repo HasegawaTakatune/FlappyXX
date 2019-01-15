@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Floor : MonoBehaviour {
 
@@ -8,11 +6,14 @@ public class Floor : MonoBehaviour {
     float Current;
     Material material;
 
-	void Start () {
+	void Start ()
+    {
         material = GetComponent<Renderer>().material;
 	}
 	
-	void Update () {
+	void Update ()
+    {
+        // マテリアルをスクロールさせて床が移動している様に見せる
         Current += Time.deltaTime * Speed;
 
         material.SetTextureOffset("_MainTex", new Vector2(Current, 0));

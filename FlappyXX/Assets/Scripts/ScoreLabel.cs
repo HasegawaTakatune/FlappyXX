@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreLabel : MonoBehaviour {
@@ -26,6 +24,7 @@ public class ScoreLabel : MonoBehaviour {
 
     void ChangeScore(int score)
     {
+        // スコアボードの更新
         text.text = score.ToString();
     }
 	

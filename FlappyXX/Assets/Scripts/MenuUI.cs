@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -10,25 +9,28 @@ public class MenuUI : MonoBehaviour {
     Text Title;
 
 	void Start () {
-        //GameManager.Instance.gameState.action += MenuControl;
+        // コールバックの設定
         GameManager.StateChangeAction.AddListener(MenuControl);
 	}
 
+    void OnDestroy()
+    {
+        // コールバックを解除
+        GameManager.StateChangeAction.RemoveListener(MenuControl);
+    }
+
     void Update()
     {
+        // ボタンクリックでゲームスタート
         if (GameManager.State == GameManager.Title & Input.GetKeyDown(KeyCode.Return))
         {
             GameManager.State = GameManager.Play;
         }
     }
-
-    void OnDestroy()
-    {
-        
-    }
-
+      
     void MenuControl(int state)
     {
+        // ゲームステータスごとの処理
         switch (state)
         {
             case GameManager.Play:
@@ -44,9 +46,9 @@ public class MenuUI : MonoBehaviour {
                 Title.enabled = true;
                 break;
         }
-        Debug.Log("MenuUI change state");
     }
 
+    // ゲームを初期状態に戻す（リロード）
     private IEnumerator ReturnScene()
     {
         yield return new WaitForSeconds(5.0f);

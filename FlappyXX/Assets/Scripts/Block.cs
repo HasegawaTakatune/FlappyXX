@@ -1,22 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Block : MonoBehaviour {
 
     [SerializeField]private Rigidbody rigid;
     [SerializeField]private float Speed = 1;
 
-	void Start ()
-    {
-    }
-	
-	void Update () {
-		
-	}
-
     void FixedUpdate()
     {
+        // オブジェクト移動
         rigid.velocity = -Vector3.right * Speed;
     }
 }

@@ -1,8 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 
+/**
+ * シングルトンクラス
+ **/ 
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T :MonoBehaviour {
 
     private static T instance;
