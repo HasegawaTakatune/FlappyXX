@@ -31,7 +31,10 @@ public class Spawner : MonoBehaviour {
         {
             case GameManager.Play:
                 if (!doOnce)
+                {
                     doOnce = true;
+                    StartCoroutine("Spawn");
+                }
                 break;
 
             case GameManager.GameOver:
@@ -47,5 +50,5 @@ public class Spawner : MonoBehaviour {
 	void Start () {
         // イベントの登録
         GameManager.StateChangeAction.AddListener(SpawnerControl);
-	}
+    }
 }

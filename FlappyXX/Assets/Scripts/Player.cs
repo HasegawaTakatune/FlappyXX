@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
     [SerializeField]private Rigidbody rigid;
     [SerializeField]private float jumpPower = 1;
     private bool jumpRequest = false;
+    private bool control = false;
 
     // 初期化処理
 	void Start () {
@@ -23,7 +24,7 @@ public class Player : MonoBehaviour {
 	void Update ()
     {
         // 入力判定
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (control && Input.GetKeyDown(KeyCode.Space))
         {
             jumpRequest = true;
         }
@@ -79,6 +80,7 @@ public class Player : MonoBehaviour {
 
             case GameManager.Play:
                 rigid.useGravity = true;
+                control = true;
                 break;
 
             case GameManager.Title:

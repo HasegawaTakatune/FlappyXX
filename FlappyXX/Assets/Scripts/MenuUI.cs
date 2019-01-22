@@ -7,6 +7,10 @@ public class MenuUI : MonoBehaviour {
 
     [SerializeField]
     Text Title;
+    [SerializeField]
+    Text GameOver;
+
+    bool doOnce = false;
 
 	void Start () {
         // コールバックの設定
@@ -22,7 +26,7 @@ public class MenuUI : MonoBehaviour {
     void Update()
     {
         // ボタンクリックでゲームスタート
-        if (GameManager.State == GameManager.Title & Input.GetKeyDown(KeyCode.Return))
+        if (GameManager.State == GameManager.Title && Input.GetKeyDown(KeyCode.Space))
         {
             GameManager.State = GameManager.Play;
         }
@@ -38,8 +42,13 @@ public class MenuUI : MonoBehaviour {
                 break;
 
             case GameManager.GameOver:
-                Title.enabled = true;
-                StartCoroutine("ReturnScene");
+                if (!doOnce)
+                {
+                    doOnce = true;
+                    GameOver.enabled = true;
+                    StartCoroutine("TimeCount");
+                    StartCoroutine("ReturnScene");
+                }
                 break;
 
             case GameManager.Title:
@@ -51,8 +60,21 @@ public class MenuUI : MonoBehaviour {
     // ゲームを初期状態に戻す（リロード）
     private IEnumerator ReturnScene()
     {
-        yield return new WaitForSeconds(5.0f);
+        yield return new WaitForSeconds(3.0f);
         GameManager.State = GameManager.Title;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private IEnumerator TimeCount()
+    {
+        float timer = 28f;
+        while (true)
+        {
+            timer -= 1f;
+            GameOver.text = "GameOver\nNext "+ (Mathf.Floor(timer) / 10).ToString ("0.0");
+            yield return new WaitForSeconds(0.1f);
+
+
+        }
     }
 }
