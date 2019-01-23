@@ -13,10 +13,6 @@ public class Player : MonoBehaviour {
         rigid = GetComponent<Rigidbody>();
 
         // ゲームステート変更通知の登録
-        ChangeGameState(GameManager.Instance.gameState.Value);
-        GameManager.Instance.gameState.action += ChangeGameState;
-
-        //GameManager.State = GameManager.Play;
         GameManager.StateChangeAction.AddListener(ChangeGameState);
 	}
 	
@@ -44,31 +40,17 @@ public class Player : MonoBehaviour {
     // 当たり判定
     void OnCollisionEnter(Collision collision)
     {
-        GameManager.Instance.gameState.Value = GameManager.GameState.GameOver;
         GameManager.State = GameManager.GameOver;
     }
 
     void OnDestroy()
     {
         // 通知の解除
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.gameState.action -= ChangeGameState;
-        }
+        GameManager.StateChangeAction.RemoveListener(ChangeGameState);
+
     }
 
     // ゲームステートごとの処理
-    void ChangeGameState(GameManager.GameState state)
-    {
-        switch (state)
-        {
-            case GameManager.GameState.GameOver:
-                // ゲームオーバー時にUpdateを停止する
-                enabled = false;
-                break;
-        }
-    }
-
     void ChangeGameState(int state)
     {
         switch (state)

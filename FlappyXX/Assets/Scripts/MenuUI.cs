@@ -3,16 +3,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+#pragma warning disable 0649
 public class MenuUI : MonoBehaviour {
 
-    [SerializeField]
-    Text Title;
-    [SerializeField]
-    Text GameOver;
+    [SerializeField]Text Title;
+    [SerializeField]Text GameOver;
 
     bool doOnce = false;
 
-	void Start () {
+	void Start ()
+    {
         // コールバックの設定
         GameManager.StateChangeAction.AddListener(MenuControl);
 	}
@@ -46,7 +46,6 @@ public class MenuUI : MonoBehaviour {
                 {
                     doOnce = true;
                     GameOver.enabled = true;
-                    StartCoroutine("TimeCount");
                     StartCoroutine("ReturnScene");
                 }
                 break;
@@ -60,21 +59,15 @@ public class MenuUI : MonoBehaviour {
     // ゲームを初期状態に戻す（リロード）
     private IEnumerator ReturnScene()
     {
-        yield return new WaitForSeconds(3.0f);
-        GameManager.State = GameManager.Title;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    private IEnumerator TimeCount()
-    {
-        float timer = 28f;
+        float timer = 15f;
         while (true)
         {
             timer -= 1f;
-            GameOver.text = "GameOver\nNext "+ (Mathf.Floor(timer) / 10).ToString ("0.0");
+            GameOver.text = "GameOver\nNext " + (Mathf.Floor(timer) / 10).ToString("0.0");
+            if (timer <= 0) break;
             yield return new WaitForSeconds(0.1f);
-
-
         }
+        GameManager.State = GameManager.Title;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+#pragma warning disable 0649
 public class Block : MonoBehaviour {
 
     [SerializeField]private Rigidbody rigid;

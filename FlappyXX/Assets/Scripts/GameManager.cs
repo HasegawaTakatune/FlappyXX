@@ -6,21 +6,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     // スコア
     public NotificationObject<int> Score = new NotificationObject<int>(0);
 
-    // ゲームステータス
-    public enum GameState
-    {
-        Title, Play, GameOver
-    }
-    public NotificationObject<GameState> gameState = new NotificationObject<GameState>(GameState.Play);
-
     void OnDestroy()
     {
         // 登録されたアクションを削除する
         Score.Dispose();
-        gameState.Dispose();
-    }
-
-    
+    }    
 
     /**
      * gameStateに登録できるアクションが1つだけだったので、
